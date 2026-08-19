@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -8,8 +17,11 @@
         "text_position": "center",
         "eyebrow": "DOLLY DISTRICT",
         "heading": "DRESS LIKE THE MAIN CHARACTER.",
+        "description": "",
         "button_text": "SHOP NEW ARRIVALS",
-        "button_link": "/collections/all"
+        "button_link": "/collections/all",
+        "button_text_secondary": "",
+        "button_link_secondary": ""
       }
     },
     "new-arrivals": {
@@ -18,6 +30,7 @@
         "eyebrow": "JUST DROPPED",
         "heading": "NEW ARRIVALS",
         "heading_position": "left",
+        "collection": "",
         "products_to_show": 4,
         "columns_desktop": "4",
         "view_all_text": "View all",
@@ -30,13 +43,54 @@
     "categories": {
       "type": "category-tiles",
       "blocks": {
-        "dresses": { "type": "tile", "settings": { "title": "DRESSES" } },
-        "sets": { "type": "tile", "settings": { "title": "SETS" } },
-        "tops": { "type": "tile", "settings": { "title": "TOPS" } },
-        "bottoms": { "type": "tile", "settings": { "title": "BOTTOMS" } },
-        "accessories": { "type": "tile", "settings": { "title": "ACCESSORIES" } }
+        "dresses": {
+          "type": "tile",
+          "settings": {
+            "title": "DRESSES",
+            "link": "",
+            "text_position": "bottom"
+          }
+        },
+        "sets": {
+          "type": "tile",
+          "settings": {
+            "title": "SETS",
+            "link": "",
+            "text_position": "bottom"
+          }
+        },
+        "tops": {
+          "type": "tile",
+          "settings": {
+            "title": "TOPS",
+            "link": "",
+            "text_position": "bottom"
+          }
+        },
+        "bottoms": {
+          "type": "tile",
+          "settings": {
+            "title": "BOTTOMS",
+            "link": "",
+            "text_position": "bottom"
+          }
+        },
+        "accessories": {
+          "type": "tile",
+          "settings": {
+            "title": "ACCESSORIES",
+            "link": "",
+            "text_position": "bottom"
+          }
+        }
       },
-      "block_order": ["dresses", "sets", "tops", "bottoms", "accessories"],
+      "block_order": [
+        "dresses",
+        "sets",
+        "tops",
+        "bottoms",
+        "accessories"
+      ],
       "settings": {
         "heading": "SHOP BY CATEGORY",
         "heading_position": "center"
@@ -48,6 +102,7 @@
         "image_position": "left",
         "eyebrow": "THE EDIT",
         "heading": "SOFT. BOLD. UNFORGETTABLE.",
+        "text": "<p>Pieces made for late nights, slow mornings and everywhere in between.</p>",
         "button_text": "SHOP THE EDIT",
         "button_link": "/collections/all"
       }
@@ -59,6 +114,7 @@
         "text_alignment": "center",
         "eyebrow": "THE DOLLY DISTRICT EDIT",
         "heading": "NEW SEASON. NEW ENERGY.",
+        "description": "",
         "button_text": "SHOP NOW",
         "button_link": "/collections/all"
       }
@@ -67,6 +123,8 @@
       "type": "featured-collection",
       "settings": {
         "heading": "BEST SELLERS",
+        "description": "",
+        "collection": "",
         "products_to_show": 8,
         "columns_desktop": "4",
         "show_sale_badge": true,
@@ -106,7 +164,11 @@
           }
         }
       },
-      "block_order": ["t1", "t2", "t3"],
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
       "settings": {
         "heading": "WHAT SHE'S SAYING"
       }
@@ -114,14 +176,58 @@
     "instagram": {
       "type": "instagram-feed",
       "blocks": {
-        "i1": { "type": "image", "settings": {} },
-        "i2": { "type": "image", "settings": {} },
-        "i3": { "type": "image", "settings": {} },
-        "i4": { "type": "image", "settings": {} },
-        "i5": { "type": "image", "settings": {} },
-        "i6": { "type": "image", "settings": {} }
+        "i1": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "i2": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "i3": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "i4": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "i5": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "image_bjkYqd": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "i6": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        }
       },
-      "block_order": ["i1", "i2", "i3", "i4", "i5", "i6"],
+      "block_order": [
+        "i1",
+        "i2",
+        "i3",
+        "i4",
+        "i5",
+        "image_bjkYqd",
+        "i6"
+      ],
       "settings": {
         "heading": "FOLLOW THE DISTRICT",
         "handle": "dollydistrict"
@@ -130,6 +236,7 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {
+        "background_color": "#f3e4e5",
         "heading": "FIRST ACCESS. ALWAYS.",
         "text": "New drops, private offers and a little fashion inspiration."
       }
