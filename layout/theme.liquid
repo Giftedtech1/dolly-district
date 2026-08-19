@@ -37,10 +37,10 @@
 
   {{ content_for_header }}
 
-  {{ settings.font_heading | font_face: font_display: 'swap' }}
-  {{ settings.font_body | font_face: font_display: 'swap' }}
-
   {% style %}
+    {%- if settings.font_heading.family -%}{{ settings.font_heading | font_face: font_display: 'swap' }}{%- endif -%}
+    {%- if settings.font_body.family -%}{{ settings.font_body | font_face: font_display: 'swap' }}{%- endif -%}
+
     :root {
       --color-background: {{ settings.color_background.red }}, {{ settings.color_background.green }}, {{ settings.color_background.blue }};
       --color-background-secondary: {{ settings.color_background_secondary.red }}, {{ settings.color_background_secondary.green }}, {{ settings.color_background_secondary.blue }};
