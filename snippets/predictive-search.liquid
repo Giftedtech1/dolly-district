@@ -1,0 +1,45 @@
+{%- comment -%}
+  Search drawer with predictive search results, powered by Shopify's predictive search API.
+{%- endcomment -%}
+<search-drawer id="SearchDrawer" class="search-drawer" hidden>
+  <div class="search-drawer__overlay" data-search-close></div>
+  <div class="search-drawer__panel" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+    <div class="search-drawer__header">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-drawer__form" data-predictive-search-form>
+        <input type="hidden" name="type" value="product,collection">
+        {% render 'icon', icon: 'search' %}
+        <input
+          type="search"
+          name="q"
+          class="search-drawer__input"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+          aria-label="{{ 'general.search.placeholder' | t }}"
+          autocomplete="off"
+          data-predictive-search-input
+        >
+        <button type="submit" class="visually-hidden">{{ 'general.search.submit' | t }}</button>
+      </form>
+      <button type="button" class="search-drawer__close" data-search-close aria-label="{{ 'accessibility.close' | t }}">
+        {% render 'icon', icon: 'close' %}
+      </button>
+    </div>
+
+    <div class="search-drawer__body">
+      <div class="search-drawer__recent" data-recent-searches>
+        <div class="search-drawer__recent-header">
+          <span>{{ 'general.search.recent_searches' | t }}</span>
+          <button type="button" class="search-drawer__clear-recent" data-clear-recent>{{ 'general.search.clear_recent' | t }}</button>
+        </div>
+        <ul class="search-drawer__recent-list" data-recent-searches-list></ul>
+      </div>
+
+      <div class="search-drawer__results" data-predictive-search-results hidden>
+        <div class="search-drawer__results-products" data-predictive-search-products></div>
+      </div>
+
+      <div class="search-drawer__no-results" data-predictive-search-empty hidden>
+        <p>{{ 'general.search.no_results_html' | t: terms: '' }}</p>
+      </div>
+    </div>
+  </div>
+</search-drawer>

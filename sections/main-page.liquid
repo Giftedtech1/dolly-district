@@ -1,0 +1,21 @@
+<section class="page-section page-width" data-section-id="{{ section.id }}">
+  {%- if section.settings.show_breadcrumbs -%}{%- render 'breadcrumbs' -%}{%- endif -%}
+  <h1 class="page-section__title">{{ page.title }}</h1>
+  <div class="page-section__content rte">
+    {{ page.content }}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

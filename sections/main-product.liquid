@@ -1,0 +1,137 @@
+<section class="product-section" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    {%- if section.settings.show_breadcrumbs -%}{%- render 'breadcrumbs' -%}{%- endif -%}
+
+    <div class="product-section__grid">
+      <div class="product-section__gallery">
+        {%- render 'product-gallery', product: product -%}
+      </div>
+
+      <div class="product-section__info">
+        <div class="product-section__info-sticky">
+          {%- if product.vendor != blank -%}
+            <p class="product-section__vendor">{{ product.vendor }}</p>
+          {%- endif -%}
+
+          <h1 class="product-section__title">{{ product.title }}</h1>
+
+          {%- if section.settings.show_rating and product.metafields.reviews.rating.value -%}
+            <div class="product-section__rating" aria-label="{{ 'accessibility.star_rating' | t: rating: product.metafields.reviews.rating.value.rating }}">
+              {%- for i in (1..5) -%}
+                <span class="{% if i <= product.metafields.reviews.rating.value.rating %}is-filled{% endif %}">{% render 'icon', icon: 'star' %}</span>
+              {%- endfor -%}
+              <span class="product-section__rating-count">({{ product.metafields.reviews.rating_count.value | default: 0 }})</span>
+            </div>
+          {%- endif -%}
+
+          {%- render 'price', product: product, variant: product.selected_or_first_available_variant -%}
+
+          <div class="product-section__form">
+            {%- render 'product-form', product: product -%}
+          </div>
+
+          <div class="product-section__accordions">
+            {%- if product.description != blank -%}
+              {%- render 'accordion-item', title: 'products.product.description' | t, content: product.description, open: true -%}
+            {%- endif -%}
+
+            {%- render 'accordion-item', title: 'products.product.shipping' | t, content: section.settings.shipping_text -%}
+            {%- render 'accordion-item', title: 'products.product.returns' | t, content: section.settings.returns_text -%}
+
+            {%- capture size_guide_trigger -%}
+              <button type="button" class="text-link" data-open-size-guide>{{ 'products.product.size_guide' | t }}</button>
+            {%- endcapture -%}
+            {%- render 'accordion-item', title: 'products.product.size_guide' | t, content: size_guide_trigger -%}
+
+            {%- if section.settings.care_text != blank -%}
+              {%- render 'accordion-item', title: 'products.product.care' | t, content: section.settings.care_text -%}
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- if section.settings.show_related -%}
+  <section class="section related-products">
+    <div class="page-width">
+      <div class="section-heading section-heading--center">
+        <h2 class="section-heading__title">{{ 'products.product.related' | t }}</h2>
+      </div>
+      <div
+        data-recommendations
+        data-url="{{ routes.product_recommendations_url }}?section_id=related-products&product_id={{ product.id }}&limit=4&intent=related"
+      >
+        <div class="product-grid product-grid--desktop-4 skeleton-grid" data-recommendations-skeleton>
+          {%- for i in (1..4) -%}<div class="product-card product-card--placeholder">{%- render 'placeholder-image', class: 'product-card__image' -%}</div>{%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{%- if section.settings.show_recently_viewed -%}
+  <section class="section recently-viewed" data-recently-viewed hidden>
+    <div class="page-width">
+      <div class="section-heading section-heading--center">
+        <h2 class="section-heading__title">{{ 'products.product.recently_viewed' | t }}</h2>
+      </div>
+      <div class="product-grid product-grid--desktop-4" data-recently-viewed-grid></div>
+    </div>
+  </section>
+{%- endif -%}
+
+<script>
+  window.DollyDistrict = window.DollyDistrict || {};
+  window.DollyDistrict.currentProduct = {{ product | json }};
+</script>
+
+{% schema %}
+{
+  "name": "Product page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show rating",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "shipping_text",
+      "label": "Shipping & delivery text",
+      "default": "<p>Free standard shipping on orders over $100. Orders ship within 1-2 business days.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "returns_text",
+      "label": "Returns text",
+      "default": "<p>Free returns within 30 days of delivery. Items must be unworn with tags attached.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "care_text",
+      "label": "Care instructions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related",
+      "label": "Show related products",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_recently_viewed",
+      "label": "Show recently viewed",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

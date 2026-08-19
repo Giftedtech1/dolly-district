@@ -1,0 +1,17 @@
+{%- comment -%}
+  Renders configured social links as icon buttons.
+{%- endcomment -%}
+<ul class="social-icons">
+  {%- if settings.social_instagram != blank -%}
+    <li><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', icon: 'instagram' %}</a></li>
+  {%- endif -%}
+  {%- if settings.social_tiktok != blank -%}
+    <li><a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', icon: 'tiktok' %}</a></li>
+  {%- endif -%}
+  {%- if settings.social_pinterest != blank -%}
+    <li><a href="{{ settings.social_pinterest }}" target="_blank" rel="noopener" aria-label="Pinterest">{% render 'icon', icon: 'pinterest' %}</a></li>
+  {%- endif -%}
+  {%- if settings.social_facebook != blank -%}
+    <li><a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon', icon: 'facebook' %}</a></li>
+  {%- endif -%}
+</ul>

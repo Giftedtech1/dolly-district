@@ -1,0 +1,269 @@
+{%- liquid
+  assign transparent = false
+  if section.settings.transparent_header and request.page_type == 'index'
+    assign transparent = true
+  endif
+  assign sticky = section.settings.sticky_header
+  assign menu = section.settings.menu
+-%}
+<header
+  id="SiteHeader"
+  class="site-header {% if transparent %}site-header--transparent{% endif %} {% if sticky %}site-header--sticky{% endif %}"
+  data-header
+  data-transparent="{{ transparent }}"
+>
+  <div class="site-header__inner page-width">
+    <button type="button" class="site-header__menu-toggle" data-drawer-open aria-label="{{ 'accessibility.open_menu' | t }}" aria-controls="MobileDrawer" aria-expanded="false">
+      {% render 'icon', icon: 'menu' %}
+    </button>
+
+    <a href="{{ routes.root_url }}" class="site-header__logo">
+      {%- if section.settings.logo -%}
+        <img
+          src="{{ section.settings.logo | image_url: width: 400 }}"
+          alt="{{ shop.name }}"
+          width="{{ section.settings.logo_width }}"
+          height="{{ section.settings.logo_width | divided_by: section.settings.logo.aspect_ratio }}"
+          class="site-header__logo-image"
+        >
+      {%- else -%}
+        <span class="site-header__logo-text">{{ shop.name | default: 'DOLLY DISTRICT' }}</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="site-header__nav" aria-label="Primary">
+      <ul class="site-header__nav-list">
+        {%- for link in menu.links -%}
+          {%- liquid
+            assign mega_block = nil
+            for block in section.blocks
+              if block.type == 'mega_menu' and block.settings.menu_item_title == link.title
+                assign mega_block = block
+              endif
+            endfor
+          -%}
+          <li class="site-header__nav-item {% if link.links != blank or mega_block %}has-dropdown{% endif %}">
+            <a href="{{ link.url }}" class="site-header__nav-link">
+              {{ link.title }}
+              {%- if link.links != blank or mega_block %}{% render 'icon', icon: 'chevron-down' %}{% endif -%}
+            </a>
+
+            {%- if mega_block -%}
+              <div class="mega-menu" {{ mega_block.shopify_attributes }}>
+                <div class="mega-menu__inner page-width">
+                  <div class="mega-menu__columns">
+                    {%- if link.links != blank -%}
+                      <div class="mega-menu__column">
+                        <p class="mega-menu__column-title">{{ 'general.search.products' | t }}</p>
+                        <ul>
+                          {%- for sublink in link.links -%}
+                            <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                    {%- endif -%}
+
+                    {%- if mega_block.settings.featured_collection -%}
+                      <div class="mega-menu__column">
+                        <p class="mega-menu__column-title">{{ mega_block.settings.featured_title | default: 'Featured' }}</p>
+                        <ul>
+                          {%- for product in mega_block.settings.featured_collection.products limit: 4 -%}
+                            <li><a href="{{ product.url }}">{{ product.title }}</a></li>
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                    {%- endif -%}
+                  </div>
+
+                  {%- if mega_block.settings.image -%}
+                    <a href="{{ mega_block.settings.image_link | default: link.url }}" class="mega-menu__promo">
+                      <img
+                        src="{{ mega_block.settings.image | image_url: width: 600 }}"
+                        alt="{{ mega_block.settings.image.alt | escape }}"
+                        width="{{ mega_block.settings.image.width }}"
+                        height="{{ mega_block.settings.image.height }}"
+                        loading="lazy"
+                      >
+                      {%- if mega_block.settings.promo_heading -%}
+                        <span class="mega-menu__promo-text">
+                          <strong>{{ mega_block.settings.promo_heading }}</strong>
+                          {%- if mega_block.settings.promo_text -%}<span>{{ mega_block.settings.promo_text }}</span>{%- endif -%}
+                        </span>
+                      {%- endif -%}
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- elsif link.links != blank -%}
+              <ul class="site-header__dropdown">
+                {%- for sublink in link.links -%}
+                  <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <button type="button" class="site-header__action" data-search-open aria-label="{{ 'general.search.search' | t }}" aria-controls="SearchDrawer">
+        {% render 'icon', icon: 'search' %}
+        <span class="site-header__action-label">{{ 'general.search.search' | t }}</span>
+      </button>
+
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="site-header__action" aria-label="{{ 'general.account.account' | t }}">
+          {% render 'icon', icon: 'account' %}
+          <span class="site-header__action-label">{{ 'general.account.account' | t }}</span>
+        </a>
+      {%- endif -%}
+
+      <a href="#" class="site-header__action" data-wishlist-open aria-label="{{ 'general.wishlist.title' | t }}">
+        {% render 'icon', icon: 'heart' %}
+        <span class="site-header__action-label">{{ 'general.wishlist.title' | t }}</span>
+        <span class="site-header__count" data-wishlist-count hidden>0</span>
+      </a>
+
+      <button type="button" class="site-header__action site-header__action--bag" data-cart-open aria-label="{{ 'general.cart.title' | t }}">
+        {% render 'icon', icon: 'bag' %}
+        <span class="site-header__action-label">{{ 'general.cart.title' | t }} (<span data-cart-count>{{ cart.item_count }}</span>)</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+{%- render 'predictive-search' -%}
+
+<div id="MobileDrawer" class="mobile-drawer" hidden>
+  <div class="mobile-drawer__overlay" data-drawer-close></div>
+  <div class="mobile-drawer__panel">
+    <div class="mobile-drawer__header">
+      <span class="mobile-drawer__logo">{{ shop.name }}</span>
+      <button type="button" class="mobile-drawer__close" data-drawer-close aria-label="{{ 'accessibility.close_menu' | t }}">
+        {% render 'icon', icon: 'close' %}
+      </button>
+    </div>
+    <nav class="mobile-drawer__nav" aria-label="Mobile">
+      <ul class="mobile-nav">
+        {%- for link in menu.links -%}
+          <li class="mobile-nav__item">
+            {%- if link.links != blank -%}
+              <button type="button" class="mobile-nav__link mobile-nav__link--parent" data-mobile-submenu-toggle>
+                {{ link.title }}
+                {% render 'icon', icon: 'chevron-right' %}
+              </button>
+              <div class="mobile-submenu" data-mobile-submenu>
+                <button type="button" class="mobile-submenu__back" data-mobile-submenu-back>
+                  {% render 'icon', icon: 'chevron-left' %} {{ link.title }}
+                </button>
+                <ul>
+                  <li><a href="{{ link.url }}" class="mobile-submenu__all">{{ link.title }} — All</a></li>
+                  {%- for sublink in link.links -%}
+                    <li><a href="{{ sublink.url }}">{{ sublink.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- else -%}
+              <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+    <div class="mobile-drawer__footer">
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="mobile-drawer__account-link">{% render 'icon', icon: 'account' %} {{ 'general.account.account' | t }}</a>
+      {%- endif -%}
+      <div class="mobile-drawer__social">
+        {%- render 'social-icons' -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "min": 80,
+      "max": 260,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_header",
+      "label": "Transparent over hero",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Sticky header",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_menu",
+      "name": "Mega menu panel",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_item_title",
+          "label": "Matching menu item title",
+          "info": "Must exactly match a top-level navigation label, e.g. SHOP"
+        },
+        {
+          "type": "collection",
+          "id": "featured_collection",
+          "label": "Featured collection"
+        },
+        {
+          "type": "text",
+          "id": "featured_title",
+          "label": "Featured column title",
+          "default": "Featured"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Promo image"
+        },
+        {
+          "type": "url",
+          "id": "image_link",
+          "label": "Promo image link"
+        },
+        {
+          "type": "text",
+          "id": "promo_heading",
+          "label": "Promo heading"
+        },
+        {
+          "type": "text",
+          "id": "promo_text",
+          "label": "Promo text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

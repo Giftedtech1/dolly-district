@@ -1,0 +1,18 @@
+{%- comment -%}
+  Rendered via the Section Rendering API through routes.product_recommendations_url.
+  See assets/theme.js -> initProductRecommendations().
+{%- endcomment -%}
+{%- if recommendations.performed and recommendations.products_count > 0 -%}
+  <div class="product-grid product-grid--desktop-4">
+    {%- for product in recommendations.products -%}
+      {%- render 'product-card', product: product -%}
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Related products",
+  "settings": []
+}
+{% endschema %}

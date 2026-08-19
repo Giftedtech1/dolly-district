@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_breadcrumbs": true,
+        "show_rating": true,
+        "show_related": true,
+        "show_recently_viewed": true
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,25 @@
+<div class="page-width auth-page">
+  <div class="auth-card">
+    <h1>{{ 'general.account.login' | t }}</h1>
+
+    {%- if form.errors -%}
+      <div class="auth-card__errors" role="alert">{{ form.errors | default_errors }}</div>
+    {%- endif -%}
+
+    {%- form 'customer_login' -%}
+      <label for="CustomerEmail">Email</label>
+      <input type="email" name="customer[email]" id="CustomerEmail" autocomplete="email" required>
+
+      {%- if form.password_needed -%}
+        <label for="CustomerPassword">Password</label>
+        <input type="password" name="customer[password]" id="CustomerPassword" autocomplete="current-password" required>
+      {%- endif -%}
+
+      <button type="submit" class="button button--primary">{{ 'general.account.login' | t }}</button>
+
+      <a href="{{ routes.account_recover_url }}" class="text-link" data-recover-toggle>Forgot your password?</a>
+    {%- endform -%}
+
+    <p class="auth-card__switch">New here? <a href="{{ routes.account_register_url }}">{{ 'general.account.register' | t }}</a></p>
+  </div>
+</div>

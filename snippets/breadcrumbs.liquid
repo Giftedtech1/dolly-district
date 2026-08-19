@@ -1,0 +1,32 @@
+{%- comment -%}
+  Renders breadcrumb navigation with structured data.
+{%- endcomment -%}
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ol class="breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ routes.root_url }}" itemprop="item"><span itemprop="name">{{ 'general.meta.tagline' | t }}</span></a>
+      <meta itemprop="position" content="1">
+    </li>
+
+    {%- if template.name == 'product' and product.collections.first -%}
+      <li class="breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ product.collections.first.url }}" itemprop="item"><span itemprop="name">{{ product.collections.first.title }}</span></a>
+        <meta itemprop="position" content="2">
+      </li>
+      <li class="breadcrumbs__item breadcrumbs__item--current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+        <span itemprop="name">{{ product.title }}</span>
+        <meta itemprop="position" content="3">
+      </li>
+    {%- elsif template.name == 'collection' and collection -%}
+      <li class="breadcrumbs__item breadcrumbs__item--current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+        <span itemprop="name">{{ collection.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+    {%- elsif page -%}
+      <li class="breadcrumbs__item breadcrumbs__item--current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+        <span itemprop="name">{{ page.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+    {%- endif -%}
+  </ol>
+</nav>

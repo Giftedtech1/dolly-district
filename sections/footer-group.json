@@ -1,0 +1,48 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": {
+          "type": "link_column",
+          "settings": {
+            "title": "SHOP",
+            "menu": "footer-shop"
+          }
+        },
+        "help": {
+          "type": "link_column",
+          "settings": {
+            "title": "HELP",
+            "menu": "footer-help"
+          }
+        },
+        "about": {
+          "type": "text_column",
+          "settings": {
+            "title": "ABOUT",
+            "text": "<p>Modern, feminine and fashion-forward — Dolly District designs pieces for every era of your story.</p><p><a href=\"/pages/privacy-policy\">Privacy</a><br><a href=\"/pages/terms-of-service\">Terms</a></p>"
+          }
+        },
+        "follow": {
+          "type": "social_column",
+          "settings": {
+            "title": "FOLLOW"
+          }
+        }
+      },
+      "block_order": ["shop", "help", "about", "follow"],
+      "settings": {
+        "background_color": "#F3E4E5",
+        "show_newsletter": true,
+        "newsletter_heading": "FIRST ACCESS. ALWAYS.",
+        "newsletter_text": "New drops, private offers and a little fashion inspiration.",
+        "show_payment_icons": true,
+        "bottom_text": "All rights reserved."
+      }
+    }
+  },
+  "order": ["footer"]
+}

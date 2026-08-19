@@ -1,0 +1,66 @@
+<section class="search-page page-width" data-section-id="{{ section.id }}">
+  <div class="search-page__header">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-page__form">
+      <input type="hidden" name="type" value="product,collection,page,article">
+      {% render 'icon', icon: 'search' %}
+      <input
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ 'general.search.placeholder' | t }}"
+        class="search-page__input"
+        aria-label="{{ 'general.search.placeholder' | t }}"
+      >
+      <button type="submit" class="button button--primary">{{ 'general.search.submit' | t }}</button>
+    </form>
+  </div>
+
+  {%- if search.performed -%}
+    <h1 class="search-page__heading">
+      {%- if search.results_count > 0 -%}
+        {{ 'general.search.results_for_html' | t: terms: search.terms }}
+        ({{ 'general.search.results_count' | t: count: search.results_count }})
+      {%- else -%}
+        {{ 'general.search.no_results_html' | t: terms: search.terms }}
+      {%- endif -%}
+    </h1>
+
+    {%- if search.results_count > 0 -%}
+      {%- paginate search.results by 24 -%}
+        <div class="product-grid product-grid--desktop-4">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {%- render 'product-card', product: item -%}
+            {%- else -%}
+              <a href="{{ item.url }}" class="search-result-card">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 600 }}" alt="{{ item.image.alt | escape }}" loading="lazy" width="300" height="300">
+                {%- else -%}
+                  {%- render 'placeholder-image', class: 'search-result-card__image' -%}
+                {%- endif -%}
+                <p class="search-result-card__type">{{ item.object_type | capitalize }}</p>
+                <h3>{{ item.title }}</h3>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        {%- render 'pagination', paginate: paginate -%}
+      {%- endpaginate -%}
+    {%- else -%}
+      <div class="collection-empty">
+        <a href="{{ routes.all_products_collection_url }}" class="button button--primary">{{ 'general.cart.continue_shopping' | t }}</a>
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="search-page__empty">
+      <p>{{ 'general.search.prompt' | t }}</p>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Search page",
+  "settings": []
+}
+{% endschema %}

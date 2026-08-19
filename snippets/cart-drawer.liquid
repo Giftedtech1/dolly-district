@@ -1,0 +1,33 @@
+{%- comment -%}
+  Global cart drawer. Only rendered/used when settings.cart_type == 'drawer', but markup
+  is always present so JS can progressively enhance the add-to-cart flow either way.
+{%- endcomment -%}
+<cart-drawer id="CartDrawer" class="cart-drawer" data-cart-type="{{ settings.cart_type }}" hidden>
+  <div class="cart-drawer__overlay" data-cart-drawer-close></div>
+  <div class="cart-drawer__panel" role="dialog" aria-modal="true" aria-label="{{ 'general.cart.title' | t }}">
+    <div class="cart-drawer__header">
+      <h2 class="cart-drawer__title">{{ 'general.cart.title' | t }}</h2>
+      <button type="button" class="cart-drawer__close" data-cart-drawer-close aria-label="{{ 'accessibility.close' | t }}">
+        {% render 'icon', icon: 'close' %}
+      </button>
+    </div>
+
+    <div class="cart-drawer__body" data-cart-drawer-body>
+      {%- render 'cart-items', cart: cart, context: 'drawer' -%}
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="cart-drawer__footer" data-cart-drawer-footer>
+        <div class="cart-drawer__subtotal">
+          <span>{{ 'general.cart.subtotal' | t }}</span>
+          <span data-cart-subtotal>{{ cart.total_price | money }}</span>
+        </div>
+        <p class="cart-drawer__shipping-note">{{ 'general.cart.shipping_at_checkout' | t }}</p>
+        <a href="{{ routes.cart_url }}" class="button button--secondary cart-drawer__view-cart">{{ 'general.cart.view_bag' | t }}</a>
+        <form action="{{ routes.cart_url }}" method="post">
+          <button type="submit" name="checkout" class="button button--primary cart-drawer__checkout">{{ 'general.cart.checkout' | t }}</button>
+        </form>
+      </div>
+    {%- endif -%}
+  </div>
+</cart-drawer>

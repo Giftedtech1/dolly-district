@@ -1,0 +1,40 @@
+<div class="page-width order-page">
+  <a href="{{ routes.account_url }}" class="text-link">{% render 'icon', icon: 'chevron-left' %} {{ 'general.account.account' | t }}</a>
+  <h1>Order {{ order.name }}</h1>
+  <p>{{ order.created_at | date: '%B %d, %Y' }}</p>
+
+  <table class="order-page__items">
+    <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Total</th></tr></thead>
+    <tbody>
+      {%- for line_item in order.line_items -%}
+        <tr>
+          <td>{{ line_item.title }}</td>
+          <td>{{ line_item.price | money }}</td>
+          <td>{{ line_item.quantity }}</td>
+          <td>{{ line_item.final_line_price | money }}</td>
+        </tr>
+      {%- endfor -%}
+    </tbody>
+  </table>
+
+  <div class="order-page__totals">
+    <p>Subtotal: {{ order.subtotal_price | money }}</p>
+    <p>Shipping: {{ order.shipping_price | money }}</p>
+    <p>Total: {{ order.total_price | money }}</p>
+  </div>
+
+  <div class="order-page__addresses">
+    {%- if order.shipping_address -%}
+      <div>
+        <h3>Shipping address</h3>
+        {{ order.shipping_address | format_address }}
+      </div>
+    {%- endif -%}
+    {%- if order.billing_address -%}
+      <div>
+        <h3>Billing address</h3>
+        {{ order.billing_address | format_address }}
+      </div>
+    {%- endif -%}
+  </div>
+</div>

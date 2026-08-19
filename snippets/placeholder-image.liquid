@@ -1,0 +1,7 @@
+{%- comment -%}
+  Renders a clean placeholder for missing product/section images.
+  Accepts: class
+{%- endcomment -%}
+<div class="placeholder-image {{ class }}" role="img" aria-label="{{ 'general.meta.no_image' | t }}">
+  {% render 'icon', icon: 'placeholder' %}
+</div>

@@ -1,0 +1,72 @@
+<section class="article-section page-width" data-section-id="{{ section.id }}">
+  {%- render 'breadcrumbs' -%}
+
+  <article class="article">
+    <header class="article__header">
+      {%- if article.tags.size > 0 -%}
+        <div class="article__tags">
+          {%- for tag in article.tags -%}<span class="article__tag">{{ tag }}</span>{%- endfor -%}
+        </div>
+      {%- endif -%}
+      <h1 class="article__title">{{ article.title }}</h1>
+      <p class="article__meta">
+        {{ 'blog.by_author' | t: author: article.author }} &middot; {{ article.published_at | date: '%B %d, %Y' }}
+      </p>
+    </header>
+
+    {%- if article.image -%}
+      <div class="article__image">
+        <img
+          src="{{ article.image | image_url: width: 1600 }}"
+          alt="{{ article.image.alt | escape }}"
+          width="{{ article.image.width }}"
+          height="{{ article.image.height }}"
+          loading="eager"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="article__content rte">
+      {{ article.content }}
+    </div>
+
+    <footer class="article__footer">
+      <a href="{{ blog.url }}" class="text-link">{% render 'icon', icon: 'chevron-left' %} {{ 'blog.back_to_blog' | t }}</a>
+    </footer>
+
+    {%- if blog.comments_enabled? -%}
+      <div class="article__comments">
+        {%- if article.comments_count > 0 -%}
+          <ul class="article__comment-list">
+            {%- for comment in article.comments -%}
+              <li class="article__comment">
+                <p class="article__comment-author">{{ comment.author }}</p>
+                <div class="article__comment-content">{{ comment.content }}</div>
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- form 'new_comment', article -%}
+          {%- if form.posted_successfully? -%}
+            <p role="status">Comment posted.</p>
+          {%- endif -%}
+          <label for="CommentAuthor">Name</label>
+          <input type="text" id="CommentAuthor" name="comment[author]" required>
+          <label for="CommentEmail">Email</label>
+          <input type="email" id="CommentEmail" name="comment[email]" required>
+          <label for="CommentBody">Comment</label>
+          <textarea id="CommentBody" name="comment[body]" rows="5" required></textarea>
+          <button type="submit" class="button button--primary">Post comment</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </article>
+</section>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": []
+}
+{% endschema %}

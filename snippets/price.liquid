@@ -1,0 +1,38 @@
+{%- comment -%}
+  Renders a price block with compare-at / sale support.
+  Accepts: product (or variant), show_badge
+{%- endcomment -%}
+{%- liquid
+  assign target = variant | default: product
+  assign compare_at_price = target.compare_at_price
+  assign price = target.price
+  assign available = target.available | default: product.available
+
+  if product and variant == blank
+    assign price = product.price_min
+    assign compare_at_price = product.compare_at_price_min
+  endif
+
+  assign on_sale = false
+  if compare_at_price > price
+    assign on_sale = true
+  endif
+-%}
+<div class="price {% if on_sale %}price--on-sale{% endif %}">
+  {%- if available == false -%}
+    <span class="price__sold-out">{{ 'products.product.sold_out' | t }}</span>
+  {%- else -%}
+    {%- if product and variant == blank and product.price_varies -%}
+      <span class="price__regular">{{ 'products.product.from_price' | t: price: price | money }}</span>
+    {%- else -%}
+      {%- if on_sale -%}
+        <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+        <span class="price__sale">{{ price | money }}</span>
+        <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+        <span class="price__compare">{{ compare_at_price | money }}</span>
+      {%- else -%}
+        <span class="price__regular">{{ price | money }}</span>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+</div>

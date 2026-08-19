@@ -1,0 +1,56 @@
+<section class="blog-section page-width" data-section-id="{{ section.id }}">
+  {%- render 'breadcrumbs' -%}
+  <h1 class="blog-section__title">{{ blog.title }}</h1>
+
+  {%- paginate blog.articles by section.settings.articles_per_page -%}
+    {%- if blog.articles.size > 0 -%}
+      <div class="blog-grid">
+        {%- for article in blog.articles -%}
+          <article class="blog-card reveal-up">
+            <a href="{{ article.url }}" class="blog-card__media">
+              {%- if article.image -%}
+                <img
+                  src="{{ article.image | image_url: width: 800 }}"
+                  srcset="{{ article.image | image_url: width: 400 }} 400w, {{ article.image | image_url: width: 800 }} 800w"
+                  sizes="(min-width: 750px) 33vw, 100vw"
+                  alt="{{ article.image.alt | escape }}"
+                  width="{{ article.image.width }}"
+                  height="{{ article.image.height }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {%- render 'placeholder-image', class: 'blog-card__image' -%}
+              {%- endif -%}
+            </a>
+            <div class="blog-card__content">
+              <p class="blog-card__date">{{ article.published_at | date: '%B %d, %Y' }}</p>
+              <h2 class="blog-card__title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+              <p class="blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+              <a href="{{ article.url }}" class="text-link">{{ 'blog.read_more' | t }}</a>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+      {%- render 'pagination', paginate: paginate -%}
+    {%- else -%}
+      <p class="empty-state-text">{{ 'collections.general.no_products' | t }}</p>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "Blog page",
+  "settings": [
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "label": "Articles per page",
+      "min": 3,
+      "max": 24,
+      "step": 3,
+      "default": 9
+    }
+  ]
+}
+{% endschema %}

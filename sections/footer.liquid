@@ -1,0 +1,119 @@
+<footer class="site-footer" style="background-color: {{ section.settings.background_color }};">
+  <div class="page-width">
+    {%- if section.settings.show_newsletter -%}
+      <div class="site-footer__newsletter">
+        <h2 class="site-footer__newsletter-heading">{{ section.settings.newsletter_heading }}</h2>
+        <p class="site-footer__newsletter-text">{{ section.settings.newsletter_text }}</p>
+        {%- render 'newsletter-form', id: 'Footer' -%}
+      </div>
+    {%- endif -%}
+
+    <div class="site-footer__columns">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'link_column' -%}
+            <div class="site-footer__column" {{ block.shopify_attributes }}>
+              <h3 class="site-footer__column-title">{{ block.settings.title }}</h3>
+              {%- if block.settings.menu != blank -%}
+                <ul>
+                  {%- for link in block.settings.menu.links -%}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          {%- when 'text_column' -%}
+            <div class="site-footer__column" {{ block.shopify_attributes }}>
+              <h3 class="site-footer__column-title">{{ block.settings.title }}</h3>
+              <div class="site-footer__column-text">{{ block.settings.text }}</div>
+            </div>
+          {%- when 'social_column' -%}
+            <div class="site-footer__column" {{ block.shopify_attributes }}>
+              <h3 class="site-footer__column-title">{{ block.settings.title }}</h3>
+              {%- render 'social-icons' -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.bottom_text }}</p>
+      {%- if section.settings.show_payment_icons -%}
+        <ul class="site-footer__payment-icons">
+          {%- for type in shop.enabled_payment_types -%}
+            <li>{{ type | payment_type_svg_tag: class: 'payment-icon' }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#F3E4E5"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show newsletter signup",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter heading",
+      "default": "FIRST ACCESS. ALWAYS."
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Newsletter text",
+      "default": "New drops, private offers and a little fashion inspiration."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "bottom_text",
+      "label": "Bottom text",
+      "default": "All rights reserved."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_column",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "SHOP" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    },
+    {
+      "type": "text_column",
+      "name": "Text column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "ABOUT" },
+        { "type": "richtext", "id": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "social_column",
+      "name": "Social column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "FOLLOW" }
+      ]
+    }
+  ]
+}
+{% endschema %}

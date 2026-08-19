@@ -1,0 +1,47 @@
+{%- comment -%}
+  Renders cart line items. Accepts: cart, context ('drawer' or 'page')
+{%- endcomment -%}
+{%- if cart.item_count == 0 -%}
+  <div class="cart-empty">
+    <p>{{ 'general.cart.empty' | t }}</p>
+    <a href="{{ routes.all_products_collection_url }}" class="button button--primary">{{ 'general.cart.continue_shopping' | t }}</a>
+  </div>
+{%- else -%}
+  <ul class="cart-items" data-cart-items>
+    {%- for item in cart.items -%}
+      <li class="cart-item" data-cart-item data-line="{{ forloop.index }}" data-variant-id="{{ item.variant_id }}">
+        <a href="{{ item.url }}" class="cart-item__image-link">
+          {%- if item.image -%}
+            <img
+              src="{{ item.image | image_url: width: 300 }}"
+              alt="{{ item.image.alt | escape }}"
+              width="150"
+              height="{{ 150 | divided_by: item.image.aspect_ratio }}"
+              loading="lazy"
+              class="cart-item__image"
+            >
+          {%- else -%}
+            {%- render 'placeholder-image', class: 'cart-item__image' -%}
+          {%- endif -%}
+        </a>
+        <div class="cart-item__details">
+          <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title }}</a>
+          {%- if item.variant.title != 'Default Title' -%}
+            <p class="cart-item__variant">{{ item.variant.title }}</p>
+          {%- endif -%}
+          {%- render 'price', variant: item.variant -%}
+
+          <div class="cart-item__controls">
+            <div class="quantity-selector quantity-selector--small">
+              <button type="button" class="quantity-selector__button" data-cart-quantity-decrease aria-label="{{ 'accessibility.previous' | t }}">{% render 'icon', icon: 'minus' %}</button>
+              <input type="number" class="quantity-selector__input" value="{{ item.quantity }}" min="0" data-cart-quantity-input aria-label="{{ 'general.cart.quantity' | t }}">
+              <button type="button" class="quantity-selector__button" data-cart-quantity-increase aria-label="{{ 'accessibility.next' | t }}">{% render 'icon', icon: 'plus' %}</button>
+            </div>
+            <button type="button" class="cart-item__remove" data-cart-remove aria-label="{{ 'general.cart.remove' | t }}">{{ 'general.cart.remove' | t }}</button>
+          </div>
+        </div>
+        <div class="cart-item__line-price">{{ item.final_line_price | money }}</div>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

@@ -1,0 +1,158 @@
+{
+  "general": {
+    "meta": {
+      "tagline": "Modern women's fashion, made for main character energy.",
+      "no_image": "No image available"
+    },
+    "search": {
+      "search": "Search",
+      "placeholder": "Search products, collections...",
+      "submit": "Submit search",
+      "no_results_html": "No results found for \"{{ terms }}\"",
+      "results_for_html": "Search results for \"{{ terms }}\"",
+      "results_count": {
+        "one": "{{ count }} result",
+        "other": "{{ count }} results"
+      },
+      "prompt": "Search for products, collections and more.",
+      "recent_searches": "Recent searches",
+      "clear_recent": "Clear",
+      "products": "Products",
+      "collections": "Collections",
+      "view_all_results": "View all results"
+    },
+    "cart": {
+      "title": "Your Bag",
+      "item_added": "Added to your bag",
+      "view_bag": "View bag",
+      "subtotal": "Subtotal",
+      "remove": "Remove",
+      "empty": "Your bag is empty",
+      "empty_link": "Continue shopping",
+      "quantity": "Quantity",
+      "continue_shopping": "Continue shopping",
+      "checkout": "Checkout",
+      "note": "Order note",
+      "discount_placeholder": "Discount code",
+      "shipping_at_checkout": "Taxes and shipping calculated at checkout",
+      "you_may_also_like": "You may also like",
+      "cart_error": "There was an error adding this item to your bag.",
+      "max_quantity": "Only {{ quantity }} left in stock"
+    },
+    "wishlist": {
+      "title": "Wishlist",
+      "add": "Add to wishlist",
+      "remove": "Remove from wishlist",
+      "empty": "Your wishlist is empty",
+      "added": "Added to wishlist",
+      "view": "View wishlist"
+    },
+    "account": {
+      "account": "Account",
+      "login": "Log in",
+      "register": "Create account",
+      "logout": "Log out",
+      "orders": "Order history",
+      "details": "Account details"
+    },
+    "share": {
+      "share": "Share"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Bag",
+      "buy_now": "Buy It Now",
+      "adding": "Adding...",
+      "added": "Added",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "on_sale": "Sale",
+      "new": "New",
+      "quantity": "Quantity",
+      "size_guide": "Size Guide",
+      "sku": "SKU",
+      "vendor": "Vendor",
+      "view_full_details": "View full details",
+      "choose_options": "Choose Options",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "from_price": "From {{ price }}",
+      "select_option": "Select {{ option }}",
+      "description": "Description",
+      "shipping": "Shipping & Delivery",
+      "returns": "Returns",
+      "care": "Care Instructions",
+      "related": "You May Also Like",
+      "recently_viewed": "Recently Viewed",
+      "no_reviews": "No reviews yet"
+    },
+    "media": {
+      "open_media": "Open media {{ index }} in modal",
+      "play_video": "Play video",
+      "gallery_viewer": "Gallery Viewer",
+      "zoom": "Zoom image"
+    }
+  },
+  "collections": {
+    "general": {
+      "no_products": "Nothing here yet.",
+      "no_products_html": "No products found in this collection.",
+      "product_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "sort_by": "Sort by",
+      "filter_by": "Filter",
+      "clear_filters": "Clear all",
+      "clear": "Clear",
+      "apply_filters": "Apply",
+      "grid_view": "Grid view",
+      "list_view": "List view",
+      "showing_results": "Showing {{ count }} of {{ total }}"
+    },
+    "sorting": {
+      "featured": "Featured",
+      "best_selling": "Best selling",
+      "az": "Alphabetically, A-Z",
+      "za": "Alphabetically, Z-A",
+      "price_ascending": "Price, low to high",
+      "price_descending": "Price, high to low",
+      "date_descending": "Date, new to old",
+      "date_ascending": "Date, old to new"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "menu": "Menu",
+    "open_menu": "Open menu",
+    "close_menu": "Close menu",
+    "cart_items": "{{ count }} items in bag",
+    "loading": "Loading...",
+    "error": "Error",
+    "star_rating": "Rated {{ rating }} out of 5 stars",
+    "carousel": "Carousel",
+    "play": "Play",
+    "pause": "Pause"
+  },
+  "newsletter": {
+    "success": "Thanks for joining the district.",
+    "error": "There was an error, please try again."
+  },
+  "404": {
+    "title": "Page not found",
+    "subtext": "The page you're looking for doesn't exist.",
+    "link": "Return to homepage"
+  },
+  "testimonials": {
+    "verified_customer": "Verified Customer"
+  },
+  "blog": {
+    "read_more": "Read more",
+    "back_to_blog": "Back to blog",
+    "by_author": "By {{ author }}"
+  }
+}

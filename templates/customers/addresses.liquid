@@ -1,0 +1,36 @@
+<div class="page-width addresses-page">
+  <a href="{{ routes.account_url }}" class="text-link">{% render 'icon', icon: 'chevron-left' %} {{ 'general.account.account' | t }}</a>
+  <h1>Addresses</h1>
+
+  {%- form 'customer_address', customer.new_address -%}
+    <label for="AddressFirstName">First name</label>
+    <input type="text" id="AddressFirstName" name="address[first_name]" value="{{ form.first_name }}">
+    <label for="AddressLastName">Last name</label>
+    <input type="text" id="AddressLastName" name="address[last_name]" value="{{ form.last_name }}">
+    <label for="AddressAddress1">Address</label>
+    <input type="text" id="AddressAddress1" name="address[address1]" value="{{ form.address1 }}">
+    <label for="AddressCity">City</label>
+    <input type="text" id="AddressCity" name="address[city]" value="{{ form.city }}">
+    <label for="AddressZip">Postal/Zip code</label>
+    <input type="text" id="AddressZip" name="address[zip]" value="{{ form.zip }}">
+    <label for="AddressCountry">Country</label>
+    {{ form.country_selector }}
+    <label for="AddressPhone">Phone</label>
+    <input type="tel" id="AddressPhone" name="address[phone]" value="{{ form.phone }}">
+    <button type="submit" class="button button--primary">Add address</button>
+  {%- endform -%}
+
+  {%- if customer.addresses.size > 0 -%}
+    <ul class="addresses-page__list">
+      {%- for address in customer.addresses -%}
+        <li>
+          {{ address | format_address }}
+          {%- form 'customer_address', address -%}
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class="text-link">{{ 'general.cart.remove' | t }}</button>
+          {%- endform -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>

@@ -1,0 +1,149 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "height": "full",
+        "overlay_opacity": 25,
+        "text_position": "center",
+        "eyebrow": "DOLLY DISTRICT",
+        "heading": "DRESS LIKE THE MAIN CHARACTER.",
+        "button_text": "SHOP NEW ARRIVALS",
+        "button_link": "/collections/all"
+      }
+    },
+    "new-arrivals": {
+      "type": "product-grid",
+      "settings": {
+        "eyebrow": "JUST DROPPED",
+        "heading": "NEW ARRIVALS",
+        "heading_position": "left",
+        "products_to_show": 4,
+        "columns_desktop": "4",
+        "view_all_text": "View all",
+        "view_all_link": "/collections/all",
+        "show_sale_badge": true,
+        "show_wishlist": true,
+        "show_quick_add": true
+      }
+    },
+    "categories": {
+      "type": "category-tiles",
+      "blocks": {
+        "dresses": { "type": "tile", "settings": { "title": "DRESSES" } },
+        "sets": { "type": "tile", "settings": { "title": "SETS" } },
+        "tops": { "type": "tile", "settings": { "title": "TOPS" } },
+        "bottoms": { "type": "tile", "settings": { "title": "BOTTOMS" } },
+        "accessories": { "type": "tile", "settings": { "title": "ACCESSORIES" } }
+      },
+      "block_order": ["dresses", "sets", "tops", "bottoms", "accessories"],
+      "settings": {
+        "heading": "SHOP BY CATEGORY",
+        "heading_position": "center"
+      }
+    },
+    "editorial": {
+      "type": "editorial-banner",
+      "settings": {
+        "image_position": "left",
+        "eyebrow": "THE EDIT",
+        "heading": "SOFT. BOLD. UNFORGETTABLE.",
+        "button_text": "SHOP THE EDIT",
+        "button_link": "/collections/all"
+      }
+    },
+    "promo-banner": {
+      "type": "image-banner",
+      "settings": {
+        "overlay_opacity": 35,
+        "text_alignment": "center",
+        "eyebrow": "THE DOLLY DISTRICT EDIT",
+        "heading": "NEW SEASON. NEW ENERGY.",
+        "button_text": "SHOP NOW",
+        "button_link": "/collections/all"
+      }
+    },
+    "best-sellers": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "BEST SELLERS",
+        "products_to_show": 8,
+        "columns_desktop": "4",
+        "show_sale_badge": true,
+        "show_wishlist": true,
+        "show_quick_add": true,
+        "show_view_all": true
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Happy Customer",
+            "rating": 5,
+            "review": "The outfit was even better in person. Dolly District is officially my new obsession.",
+            "verified": true
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Happy Customer",
+            "rating": 5,
+            "review": "Fast shipping, gorgeous packaging, and the fit was perfect. Ordering again already.",
+            "verified": true
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "name": "Happy Customer",
+            "rating": 5,
+            "review": "This brand gets it. Every piece feels made for a main character moment.",
+            "verified": true
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3"],
+      "settings": {
+        "heading": "WHAT SHE'S SAYING"
+      }
+    },
+    "instagram": {
+      "type": "instagram-feed",
+      "blocks": {
+        "i1": { "type": "image", "settings": {} },
+        "i2": { "type": "image", "settings": {} },
+        "i3": { "type": "image", "settings": {} },
+        "i4": { "type": "image", "settings": {} },
+        "i5": { "type": "image", "settings": {} },
+        "i6": { "type": "image", "settings": {} }
+      },
+      "block_order": ["i1", "i2", "i3", "i4", "i5", "i6"],
+      "settings": {
+        "heading": "FOLLOW THE DISTRICT",
+        "handle": "dollydistrict"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "FIRST ACCESS. ALWAYS.",
+        "text": "New drops, private offers and a little fashion inspiration."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "new-arrivals",
+    "categories",
+    "editorial",
+    "promo-banner",
+    "best-sellers",
+    "testimonials",
+    "instagram",
+    "newsletter"
+  ]
+}

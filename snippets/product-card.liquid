@@ -1,0 +1,105 @@
+{%- comment -%}
+  Renders a product card.
+  Accepts:
+    product, image_ratio, show_secondary_image, show_vendor, show_wishlist,
+    show_quick_add, show_sale_badge, rounded_corners, lazy
+{%- endcomment -%}
+{%- liquid
+  assign image_ratio = image_ratio | default: settings.product_card_image_ratio
+  assign show_secondary_image = show_secondary_image | default: settings.product_card_show_secondary_image
+  assign show_vendor = show_vendor | default: settings.product_card_show_vendor
+  assign show_wishlist = show_wishlist | default: settings.product_card_show_wishlist
+  assign show_quick_add = show_quick_add | default: settings.product_card_show_quick_add
+  assign show_sale_badge = show_sale_badge | default: true
+  assign rounded_corners = rounded_corners | default: settings.product_card_rounded_corners
+
+  assign compare_at_price = product.compare_at_price_min
+  assign price = product.price_min
+  assign on_sale = false
+  if compare_at_price > price
+    assign on_sale = true
+  endif
+
+  assign second_image = product.images[1]
+-%}
+<div class="product-card {% if rounded_corners %}product-card--rounded{% endif %} reveal-up" data-product-card data-product-id="{{ product.id }}">
+  <div class="product-card__media-wrap">
+    <a href="{{ product.url }}" class="product-card__media ratio-{{ image_ratio }}" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_image -%}
+        <img
+          class="product-card__image product-card__image--primary"
+          src="{{ product.featured_image | image_url: width: 800 }}"
+          srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 800 }} 800w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
+          sizes="(min-width: 990px) 25vw, 50vw"
+          alt="{{ product.featured_image.alt | escape }}"
+          loading="{{ lazy | default: 'lazy' }}"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
+        >
+        {%- if second_image and show_secondary_image -%}
+          <img
+            class="product-card__image product-card__image--secondary"
+            src="{{ second_image | image_url: width: 800 }}"
+            srcset="{{ second_image | image_url: width: 400 }} 400w, {{ second_image | image_url: width: 800 }} 800w"
+            sizes="(min-width: 990px) 25vw, 50vw"
+            alt=""
+            loading="lazy"
+            width="{{ second_image.width }}"
+            height="{{ second_image.height }}"
+          >
+        {%- endif -%}
+      {%- else -%}
+        {%- render 'placeholder-image', class: 'product-card__image product-card__image--primary' -%}
+      {%- endif -%}
+    </a>
+
+    <div class="product-card__badges">
+      {%- if product.available == false -%}
+        <span class="badge badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
+      {%- elsif on_sale and show_sale_badge -%}
+        <span class="badge badge--sale">{{ 'products.product.on_sale' | t }}</span>
+      {%- endif -%}
+    </div>
+
+    {%- if show_wishlist -%}
+      <button
+        type="button"
+        class="product-card__wishlist wishlist-toggle"
+        data-wishlist-toggle
+        data-product-id="{{ product.id }}"
+        aria-pressed="false"
+        aria-label="{{ 'general.wishlist.add' | t }}"
+      >
+        <span class="wishlist-toggle__icon-outline">{% render 'icon', icon: 'heart' %}</span>
+        <span class="wishlist-toggle__icon-filled">{% render 'icon', icon: 'heart-filled' %}</span>
+      </button>
+    {%- endif -%}
+
+    {%- if show_quick_add and product.available -%}
+      <button
+        type="button"
+        class="product-card__quick-add button button--secondary"
+        data-quick-add-trigger
+        data-product-handle="{{ product.handle }}"
+      >
+        {{ 'products.product.choose_options' | t }}
+      </button>
+    {%- endif -%}
+  </div>
+
+  <div class="product-card__info">
+    {%- if show_vendor -%}
+      <p class="product-card__vendor">{{ product.vendor }}</p>
+    {%- endif -%}
+    <h3 class="product-card__title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+    {%- render 'price', product: product -%}
+  </div>
+
+  {%- if show_quick_add and product.available -%}
+    <template data-quick-add-template>
+      {%- render 'quick-add', product: product -%}
+    </template>
+  {%- endif -%}
+</div>

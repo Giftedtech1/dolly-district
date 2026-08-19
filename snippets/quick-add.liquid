@@ -1,0 +1,26 @@
+{%- comment -%}
+  Quick add content for a product, rendered inside a hidden <template> on the product
+  card and cloned into the global quick-add modal by JS (no extra network request).
+  Accepts: product
+{%- endcomment -%}
+<div class="quick-add">
+  <div class="quick-add__media">
+    {%- if product.featured_image -%}
+      <img
+        src="{{ product.featured_image | image_url: width: 500 }}"
+        alt="{{ product.featured_image.alt | escape }}"
+        width="{{ product.featured_image.width }}"
+        height="{{ product.featured_image.height }}"
+        loading="lazy"
+      >
+    {%- else -%}
+      {%- render 'placeholder-image', class: 'quick-add__image' -%}
+    {%- endif -%}
+  </div>
+  <div class="quick-add__info">
+    <h3 class="quick-add__title">{{ product.title }}</h3>
+    {%- render 'price', product: product -%}
+    {%- render 'product-form', product: product, show_quantity: false, compact: true -%}
+    <a href="{{ product.url }}" class="quick-add__full-details">{{ 'products.product.view_full_details' | t }}</a>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+{
+  "settings": {
+    "colors": {
+      "name": "Colors",
+      "background": "Background",
+      "background_label": "Background",
+      "background_secondary_label": "Secondary background",
+      "white_label": "White",
+      "text": "Text",
+      "text_label": "Text",
+      "text_muted_label": "Muted text",
+      "accent": "Accent",
+      "accent_label": "Accent",
+      "border_label": "Border",
+      "sale_label": "Sale badge",
+      "buttons": "Buttons",
+      "button_background_label": "Button background",
+      "button_text_label": "Button text",
+      "button_secondary_background_label": "Secondary button background",
+      "button_secondary_text_label": "Secondary button text"
+    },
+    "typography": {
+      "name": "Typography",
+      "headings": "Headings",
+      "heading_font_label": "Heading font",
+      "heading_scale_label": "Heading size scale",
+      "body": "Body",
+      "body_font_label": "Body font",
+      "body_scale_label": "Body size scale",
+      "letter_spacing": "Letter spacing",
+      "heading_letter_spacing_label": "Heading letter spacing"
+    },
+    "layout": {
+      "name": "Layout",
+      "page_width_label": "Page width",
+      "spacing_sections_label": "Space between sections",
+      "grid_gap_label": "Grid gap"
+    },
+    "buttons": {
+      "name": "Buttons",
+      "border_radius_label": "Corner radius",
+      "text_transform_label": "Text style",
+      "text_transform_none": "Normal",
+      "text_transform_uppercase": "Uppercase"
+    },
+    "product_card": {
+      "name": "Product card",
+      "image_ratio_label": "Image ratio",
+      "ratio_portrait": "Portrait",
+      "ratio_square": "Square",
+      "show_secondary_image_label": "Show second image on hover",
+      "show_vendor_label": "Show vendor",
+      "show_wishlist_label": "Show wishlist button",
+      "show_quick_add_label": "Show quick add",
+      "rounded_corners_label": "Rounded corners"
+    },
+    "animations": {
+      "name": "Animations",
+      "enable_label": "Enable animations",
+      "enable_info": "Fade, reveal and hover animations. Automatically disabled for visitors who prefer reduced motion."
+    },
+    "social": {
+      "name": "Social media"
+    },
+    "cart": {
+      "name": "Cart",
+      "type_label": "Cart type",
+      "type_drawer": "Drawer",
+      "type_page": "Page",
+      "show_recommendations_label": "Show product recommendations"
+    },
+    "favicon": {
+      "name": "Favicon",
+      "image_label": "Favicon image"
+    }
+  }
+}

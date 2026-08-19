@@ -1,0 +1,86 @@
+{%- comment -%}
+  Product media gallery: thumbnails, zoom, fullscreen modal, video support, mobile swipe.
+  Accepts: product
+{%- endcomment -%}
+<product-gallery class="product-gallery" data-product-gallery>
+  <div class="product-gallery__main" data-gallery-main>
+    {%- if product.media.size > 0 -%}
+      {%- for media in product.media -%}
+        <div class="product-gallery__slide" data-gallery-slide data-media-id="{{ media.id }}" {% unless forloop.first %}hidden{% endunless %}>
+          {%- case media.media_type -%}
+            {%- when 'video', 'external_video' -%}
+              <div class="product-gallery__video-wrap" data-deferred-media data-media-id="{{ media.id }}">
+                <button type="button" class="product-gallery__play" data-play-video aria-label="{{ 'products.media.play_video' | t }}">
+                  {% render 'icon', icon: 'play' %}
+                </button>
+                {{ media | media_tag: image_size: '1200x', controls: true, loop: false, class: 'product-gallery__video' }}
+              </div>
+            {%- else -%}
+              <button type="button" class="product-gallery__zoom-trigger" data-open-zoom data-index="{{ forloop.index0 }}" aria-label="{{ 'products.media.zoom' | t }}">
+                <img
+                  src="{{ media | image_url: width: 1200 }}"
+                  srcset="{{ media | image_url: width: 600 }} 600w, {{ media | image_url: width: 1200 }} 1200w, {{ media | image_url: width: 1800 }} 1800w"
+                  sizes="(min-width: 990px) 50vw, 100vw"
+                  alt="{{ media.alt | escape }}"
+                  width="{{ media.width }}"
+                  height="{{ media.height }}"
+                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                  class="product-gallery__image"
+                >
+              </button>
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="product-gallery__slide">
+        {%- render 'placeholder-image', class: 'product-gallery__image' -%}
+      </div>
+    {%- endif -%}
+
+    <button type="button" class="product-gallery__arrow product-gallery__arrow--prev" data-gallery-prev aria-label="{{ 'accessibility.previous' | t }}">{% render 'icon', icon: 'chevron-left' %}</button>
+    <button type="button" class="product-gallery__arrow product-gallery__arrow--next" data-gallery-next aria-label="{{ 'accessibility.next' | t }}">{% render 'icon', icon: 'chevron-right' %}</button>
+  </div>
+
+  {%- if product.media.size > 1 -%}
+    <div class="product-gallery__thumbs" data-gallery-thumbs role="tablist" aria-label="{{ 'products.media.gallery_viewer' | t }}">
+      {%- for media in product.media -%}
+        <button
+          type="button"
+          class="product-gallery__thumb {% if forloop.first %}is-active{% endif %}"
+          data-gallery-thumb
+          data-index="{{ forloop.index0 }}"
+          role="tab"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-label="{{ 'products.media.open_media' | t: index: forloop.index }}"
+        >
+          <img
+            src="{{ media.preview_image | image_url: width: 200 }}"
+            alt=""
+            width="80"
+            height="80"
+            loading="lazy"
+          >
+        </button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</product-gallery>
+
+<div class="product-gallery__lightbox" data-gallery-lightbox hidden>
+  <div class="product-gallery__lightbox-overlay" data-close-zoom></div>
+  <button type="button" class="product-gallery__lightbox-close" data-close-zoom aria-label="{{ 'accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+  <div class="product-gallery__lightbox-track" data-gallery-lightbox-track>
+    {%- for media in product.media -%}
+      {%- if media.media_type == 'image' -%}
+        <img
+          src="{{ media | image_url: width: 2000 }}"
+          alt="{{ media.alt | escape }}"
+          loading="lazy"
+          data-lightbox-image
+          data-index="{{ forloop.index0 }}"
+          {% unless forloop.first %}hidden{% endunless %}
+        >
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>

@@ -1,0 +1,35 @@
+{%- comment -%}
+  Global size guide modal. Content pulled from a Shopify page handle "size-guide" when present,
+  falling back to a simple default chart. Configurable via the page's content in Shopify Admin.
+{%- endcomment -%}
+{%- assign size_guide_page = pages['size-guide'] -%}
+<div id="size-guide-modal" class="size-guide-modal" hidden>
+  <div class="size-guide-modal__overlay" data-close-size-guide></div>
+  <div class="size-guide-modal__panel" role="dialog" aria-modal="true" aria-labelledby="SizeGuideTitle">
+    <div class="size-guide-modal__header">
+      <h2 id="SizeGuideTitle">{{ 'products.product.size_guide' | t }}</h2>
+      <button type="button" class="size-guide-modal__close" data-close-size-guide aria-label="{{ 'accessibility.close' | t }}">
+        {% render 'icon', icon: 'close' %}
+      </button>
+    </div>
+    <div class="size-guide-modal__content">
+      {%- if size_guide_page -%}
+        {{ size_guide_page.content }}
+      {%- else -%}
+        <table class="size-guide-table">
+          <thead>
+            <tr><th>Size</th><th>US</th><th>Bust (in)</th><th>Waist (in)</th><th>Hip (in)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>XS</td><td>0-2</td><td>32-33</td><td>24-25</td><td>34-35</td></tr>
+            <tr><td>S</td><td>4-6</td><td>34-35</td><td>26-27</td><td>36-37</td></tr>
+            <tr><td>M</td><td>8-10</td><td>36-37.5</td><td>28-29.5</td><td>38-39.5</td></tr>
+            <tr><td>L</td><td>12-14</td><td>39-41</td><td>31-33</td><td>41-43</td></tr>
+            <tr><td>XL</td><td>16-18</td><td>42.5-44.5</td><td>34.5-36.5</td><td>44.5-46.5</td></tr>
+          </tbody>
+        </table>
+        <p class="size-guide-table__note">Create a page with the handle "size-guide" in Shopify Admin to customize this content.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+{%- comment -%}
+  Renders the product form: options as buttons, quantity, add to bag, buy now, wishlist.
+  Accepts: product, show_quantity (default true), compact (for quick add)
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign show_quantity = show_quantity | default: true
+-%}
+
+<product-form
+  class="product-form"
+  data-product-form
+  data-product-id="{{ product.id }}"
+  data-product-handle="{{ product.handle }}"
+  data-section-id="{{ section.id }}"
+>
+  {%- form 'product', product, class: 'product-form__form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+    <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id-input>
+
+    <script type="application/json" data-product-json>
+      {{ product | json }}
+    </script>
+
+    {%- for option in product.options_with_values -%}
+      <fieldset class="product-form__option" data-option-index="{{ forloop.index0 }}">
+        <legend class="product-form__option-label">
+          {{ option.name }}: <span data-selected-value>{{ option.selected_value }}</span>
+          {%- if option.name == 'Size' -%}
+            <button type="button" class="product-form__size-guide-link" data-open-size-guide>{{ 'products.product.size_guide' | t }}</button>
+          {%- endif -%}
+        </legend>
+        <div class="product-form__pills" role="listbox" aria-label="{{ option.name }}">
+          {%- for value in option.values -%}
+            <button
+              type="button"
+              class="product-pill {% if option.selected_value == value %}product-pill--selected{% endif %}"
+              data-option-value
+              data-option-index="{{ forloop.parentloop.index0 }}"
+              data-value="{{ value | escape }}"
+              role="option"
+              aria-selected="{% if option.selected_value == value %}true{% else %}false{% endif %}"
+            >
+              {{ value }}
+            </button>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+    {%- endfor -%}
+
+    {%- if show_quantity -%}
+      <div class="product-form__quantity">
+        <label for="Quantity-{{ section.id }}-{{ product.id }}">{{ 'products.product.quantity' | t }}</label>
+        <div class="quantity-selector">
+          <button type="button" class="quantity-selector__button" data-quantity-decrease aria-label="{{ 'accessibility.previous' | t }}">{% render 'icon', icon: 'minus' %}</button>
+          <input type="number" name="quantity" id="Quantity-{{ section.id }}-{{ product.id }}" class="quantity-selector__input" value="1" min="1" data-quantity-input>
+          <button type="button" class="quantity-selector__button" data-quantity-increase aria-label="{{ 'accessibility.next' | t }}">{% render 'icon', icon: 'plus' %}</button>
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="product-form__buttons">
+      <button
+        type="submit"
+        name="add"
+        class="button button--primary product-form__submit"
+        data-add-to-cart
+        {% unless current_variant.available %}disabled{% endunless %}
+      >
+        <span data-add-to-cart-text>
+          {%- if current_variant.available == false -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- else -%}
+            {{ 'products.product.add_to_cart' | t }}
+          {%- endif -%}
+        </span>
+      </button>
+
+      {%- unless compact -%}
+        <button
+          type="button"
+          class="button button--secondary product-form__buy-now"
+          data-buy-now
+          {% unless current_variant.available %}disabled{% endunless %}
+        >
+          {{ 'products.product.buy_now' | t }}
+        </button>
+
+        <button
+          type="button"
+          class="product-form__wishlist wishlist-toggle"
+          data-wishlist-toggle
+          data-product-id="{{ product.id }}"
+          aria-pressed="false"
+          aria-label="{{ 'general.wishlist.add' | t }}"
+        >
+          <span class="wishlist-toggle__icon-outline">{% render 'icon', icon: 'heart' %}</span>
+          <span class="wishlist-toggle__icon-filled">{% render 'icon', icon: 'heart-filled' %}</span>
+        </button>
+      {%- endunless -%}
+    </div>
+
+    <div class="product-form__message" data-form-message role="status" aria-live="polite" hidden></div>
+  {%- endform -%}
+</product-form>

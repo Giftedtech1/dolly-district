@@ -1,0 +1,62 @@
+<section class="cart-page page-width" data-section-id="{{ section.id }}">
+  <h1 class="cart-page__title">{{ 'general.cart.title' | t }}</h1>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="cart-empty">
+      <p>{{ 'general.cart.empty' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="button button--primary">{{ 'general.cart.continue_shopping' | t }}</a>
+    </div>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post" novalidate class="cart-page__form" data-cart-form>
+      <div class="cart-page__grid">
+        <div class="cart-page__items">
+          {%- render 'cart-items', cart: cart, context: 'page' -%}
+        </div>
+
+        <div class="cart-page__summary">
+          <div class="cart-page__note">
+            <label for="CartNote">{{ 'general.cart.note' | t }}</label>
+            <textarea name="note" id="CartNote" rows="3">{{ cart.note }}</textarea>
+          </div>
+
+          <div class="cart-page__discount">
+            <label for="DiscountCode" class="visually-hidden">{{ 'general.cart.discount_placeholder' | t }}</label>
+            <input type="text" id="DiscountCode" placeholder="{{ 'general.cart.discount_placeholder' | t }}" disabled title="Enter discount codes at checkout">
+          </div>
+
+          <div class="cart-page__subtotal">
+            <span>{{ 'general.cart.subtotal' | t }}</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cart-page__shipping-note">{{ 'general.cart.shipping_at_checkout' | t }}</p>
+
+          <button type="submit" name="checkout" class="button button--primary cart-page__checkout">{{ 'general.cart.checkout' | t }}</button>
+          <a href="{{ routes.all_products_collection_url }}" class="text-link cart-page__continue">{{ 'general.cart.continue_shopping' | t }}</a>
+        </div>
+      </div>
+    </form>
+
+    {%- if settings.cart_show_recommendations -%}
+      <div class="section related-products">
+        <div class="section-heading section-heading--center">
+          <h2 class="section-heading__title">{{ 'general.cart.you_may_also_like' | t }}</h2>
+        </div>
+        <div
+          data-recommendations
+          data-url="{{ routes.product_recommendations_url }}?section_id=related-products&product_id={{ cart.items.first.product.id }}&limit=4&intent=related"
+        >
+          <div class="product-grid product-grid--desktop-4 skeleton-grid">
+            {%- for i in (1..4) -%}<div class="product-card product-card--placeholder">{%- render 'placeholder-image', class: 'product-card__image' -%}</div>{%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "settings": []
+}
+{% endschema %}
